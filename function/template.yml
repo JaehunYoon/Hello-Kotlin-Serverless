@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
+Resources:
+  GreetingFunction:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: "GreetingHandler::handleRequest"
+      CodeUri: "./build/libs/function-all.jar"
+      Events:
+        IndexApi:
+          Type: "Api"
+          Properties:
+            Path: "/greeting"
+            Method: "get"
+      Runtime: "java8"
+      Timeout: 5
+      MemorySize: 128
+Outputs:
+  ProdEndpoint:
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com"
